@@ -1,0 +1,287 @@
+Using Amazon Web Services, demonstrate storage provisioning, backup, and data recovery using Amazon EBS with Amazon EC2.  
+Task 1. Create an Amazon EBS volume. 
+2. Attach the volume to an Amazon EC2 instance. 
+3. Configure and mount the file system on the instance.
+4. Store sample data on the mounted volume and verify it. 
+5. Create an EBS snapshot for backup. 
+6. Restore data by creating a new volume from the snapshot. 
+7. Attach the restored volume to the EC2 instance. 
+8. Mount and verify that the recovered data is intact. 
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to AWS account.
+2. Open EC2 Dashboard
+
+In top search bar type:
+
+EC2
+Open
+Amazon Elastic Compute Cloud
+3. Launch EC2 Instance
+Create Instance
+Left sidebar → Instances
+
+Click:
+
+Launch instances
+Configure Instance
+Name
+MyEC2
+AMI
+
+Select:
+
+Amazon Linux 2
+Instance Type
+
+Select:
+
+t2.micro
+Key Pair
+
+Click:
+
+Create new key pair
+
+Name:
+
+my-key
+Download .pem file
+Network Settings
+
+Allow:
+
+SSH
+
+Source:
+
+Anywhere
+Launch
+
+Click:
+
+Launch instance
+4. Create EBS Volume
+Open Volumes Section
+Left sidebar → Elastic Block Store
+
+Click:
+
+Volumes
+Create Volume
+
+Click:
+
+Create volume
+Configure
+Volume Type
+gp2 OR gp3
+Size
+5 GiB
+Availability Zone
+
+Select SAME AZ as EC2 instance.
+
+Example:
+
+ap-south-1a
+Create
+
+Click:
+
+Create volume
+5. Attach Volume to EC2
+Attach
+Select created volume
+
+Click:
+
+Actions → Attach volume
+Configure
+Instance
+
+Select:
+
+MyEC2
+Device Name
+/dev/sdf
+Attach
+
+Click:
+
+Attach volume
+6. Connect to EC2 Instance
+Open Instance
+Left sidebar → Instances
+
+Select:
+
+MyEC2
+Connect
+
+Click:
+
+Connect
+
+Open:
+
+EC2 Instance Connect
+
+Click:
+
+Connect
+
+Terminal opens.
+
+7. Check Attached Volume
+
+Run:
+
+lsblk
+
+You will see new volume like:
+
+xvdf
+8. Create File System
+
+Run:
+
+sudo mkfs -t ext4 /dev/xvdf
+9. Create Mount Directory
+
+Run:
+
+sudo mkdir /data
+10. Mount EBS Volume
+
+Run:
+
+sudo mount /dev/xvdf /data
+11. Verify Mount
+
+Run:
+
+df -h
+
+You should see:
+
+/dev/xvdf mounted on /data
+12. Store Sample Data
+Create File
+
+Run:
+
+echo "Hello AWS EBS Backup" | sudo tee /data/sample.txt
+Verify File
+
+Run:
+
+cat /data/sample.txt
+
+Output:
+
+Hello AWS EBS Backup
+13. Create EBS Snapshot
+Open Volumes
+AWS Console
+Left sidebar → Volumes
+Select your volume
+Create Snapshot
+
+Click:
+
+Actions → Create snapshot
+Description
+
+Type:
+
+Backup Snapshot
+Create
+
+Click:
+
+Create snapshot
+
+Snapshot backup completed.
+
+14. Create New Volume from Snapshot
+Open Snapshots
+Left sidebar → Snapshots
+Select created snapshot
+Create Volume
+
+Click:
+
+Actions → Create volume from snapshot
+Configure
+Availability Zone
+
+Select SAME AZ as EC2 instance.
+
+Example:
+
+ap-south-1a
+Create
+
+Click:
+
+Create volume
+
+Restored volume created.
+
+15. Attach Restored Volume to EC2
+Open Volumes
+Left sidebar → Volumes
+Select restored volume
+Attach
+
+Click:
+
+Actions → Attach volume
+Configure
+Instance
+
+Select:
+
+MyEC2
+Device Name
+/dev/sdg
+Attach
+
+Click:
+
+Attach volume
+16. Verify Restored Volume in EC2
+
+Go back to terminal.
+
+Run:
+
+lsblk
+
+You will see:
+
+xvdg
+17. Create Mount Folder
+
+Run:
+
+sudo mkdir /restore
+18. Mount Restored Volume
+
+Run:
+
+sudo mount /dev/xvdg /restore
+19. Verify Recovered Data
+
+Run:
+
+cat /restore/sample.txt
+
+Expected Output:
+
+Hello AWS EBS Backup
+
+Data recovery successful
