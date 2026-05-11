@@ -1,0 +1,227 @@
+Using Amazon Web Services, create and deploy a simple static website using Amazon
+S3.
+Tasks to be Performed
+1. Create an S3 bucket for website hosting.
+2. Configure the bucket for static website hosting.
+3. Upload the following files:
+o index.html (main webpage)
+o At least one image file
+4. Apply a bucket policy to enable public access.
+5. Set the index document as index.html.
+6. Access the website using the generated S3 endpoint URL.
+7. Verify that the website loads correctly with all resources.
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to your AWS account.
+2. Open Amazon S3
+
+In top search bar type:
+
+S3
+Open
+Amazon Simple Storage Service
+3. Create S3 Bucket
+Open Buckets
+Left sidebar → Buckets
+
+Click:
+
+Create bucket
+Configure Bucket
+Bucket Name
+
+Enter unique name.
+
+Example:
+
+sahil-static-website-demo
+Region
+
+Choose nearest region.
+
+Example:
+
+Asia Pacific (Mumbai) ap-south-1
+4. Disable Public Access Block
+
+Scroll to:
+
+Block Public Access settings for this bucket
+Untick
+
+Untick:
+
+Block all public access
+Acknowledge Warning
+
+Tick:
+
+I acknowledge that the current settings might result in this bucket and the objects within becoming public.
+5. Create Bucket
+
+Click:
+
+Create bucket
+
+Bucket created successfully.
+
+6. Open Bucket
+
+Click your bucket name:
+
+sahil-static-website-demo
+7. Create index.html File
+
+Create a file on your computer named:
+
+index.html
+
+Add this code:
+
+<html>
+<head>
+    <title>My AWS Website</title>
+</head>
+<body>
+    <h1>Welcome to My Static Website</h1>
+    <p>Website hosted using Amazon S3</p>
+
+    <img src="image.jpg" width="300">
+</body>
+</html>
+
+Save the file.
+
+8. Upload Website Files
+Upload Files
+
+Inside bucket click:
+
+Upload
+
+Click:
+
+Add files
+Select:
+index.html
+one image file
+
+Example image:
+
+image.jpg
+Upload
+
+Click:
+
+Upload
+
+Files uploaded successfully.
+
+9. Enable Static Website Hosting
+Open Properties Tab
+
+Inside bucket open:
+
+Properties
+Static Website Hosting
+
+Scroll to:
+
+Static website hosting
+
+Click:
+
+Edit
+Enable Hosting
+
+Select:
+
+Enable
+Hosting Type
+
+Choose:
+
+Host a static website
+Index Document
+
+Enter:
+
+index.html
+Save
+
+Click:
+
+Save changes
+10. Apply Bucket Policy for Public Access
+Open Permissions Tab
+
+Open:
+
+Permissions
+Bucket Policy
+
+Scroll to:
+
+Bucket policy
+
+Click:
+
+Edit
+Paste Policy
+
+Replace bucket name with your bucket name.
+
+Example:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::sahil-static-website-demo/*"
+    }
+  ]
+}
+Save Policy
+
+Click:
+
+Save changes
+11. Get Website Endpoint URL
+Open Properties
+
+Go to:
+
+Properties
+
+Scroll to:
+
+Static website hosting
+Copy Endpoint
+
+You will see:
+
+Bucket website endpoint
+
+Example:
+
+http://sahil-static-website-demo.s3-website.ap-south-1.amazonaws.com
+
+Copy the URL.
+
+12. Access Website
+Open new browser tab
+Paste endpoint URL
+Press Enter
+13. Verify Website
+
+Expected Result:
+
+✅ Webpage loads successfully
+✅ Text is displayed
+✅ Image loads correctly
