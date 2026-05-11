@@ -1,0 +1,417 @@
+design and configure a Virtual Private Cloud (VPC) with public and private subnets
+across multiple Availability Zones, configure routing and security settings, and launch an
+EC2 instance as a web server accessible through the internet.
+Task
+Create a custom VPC with public and private subnets.
+Configure Internet Gateway, NAT Gateway, and route tables.
+Create additional subnets in another Availability Zone.
+Configure subnet associations and routing.
+Create a security group to allow HTTP access.
+Launch an EC2 instance inside the public subnet.
+Configure the EC2 instance as a web server using user data scripts.
+Verify web server accessibility using the public DNS of the instance.
+
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to your AWS account.
+2. Open VPC Service
+
+In top search bar type:
+
+VPC
+Open
+Amazon Virtual Private Cloud
+3. Create Custom VPC
+Open VPC Dashboard
+Left sidebar → Your VPCs
+
+Click:
+
+Create VPC
+Configure VPC
+Resources to Create
+
+Select:
+
+VPC only
+Name Tag
+MyVPC
+IPv4 CIDR
+10.0.0.0/16
+Create
+
+Click:
+
+Create VPC
+4. Create Public Subnet
+Open Subnets
+Left sidebar → Subnets
+
+Click:
+
+Create subnet
+Configure
+VPC ID
+
+Select:
+
+MyVPC
+Subnet Name
+Public-Subnet-1
+Availability Zone
+
+Select:
+
+ap-south-1a
+IPv4 CIDR
+10.0.1.0/24
+Create
+
+Click:
+
+Create subnet
+5. Create Private Subnet
+Create Another Subnet
+
+Click:
+
+Create subnet
+Configure
+Subnet Name
+Private-Subnet-1
+Availability Zone
+ap-south-1a
+IPv4 CIDR
+10.0.2.0/24
+Create
+
+Click:
+
+Create subnet
+6. Create Additional Subnets in Another AZ
+Public Subnet 2
+Create Subnet
+Name
+Public-Subnet-2
+Availability Zone
+ap-south-1b
+CIDR
+10.0.3.0/24
+
+Click:
+
+Create subnet
+Private Subnet 2
+Create Subnet
+Name
+Private-Subnet-2
+Availability Zone
+ap-south-1b
+CIDR
+10.0.4.0/24
+
+Click:
+
+Create subnet
+7. Create Internet Gateway
+Open Internet Gateways
+Left sidebar → Internet Gateways
+
+Click:
+
+Create internet gateway
+Configure
+Name
+MyIGW
+Create
+
+Click:
+
+Create internet gateway
+8. Attach Internet Gateway to VPC
+Attach
+
+Select:
+
+MyIGW
+
+Click:
+
+Actions → Attach to VPC
+
+Select:
+
+MyVPC
+
+Click:
+
+Attach internet gateway
+9. Create Public Route Table
+Open Route Tables
+Left sidebar → Route Tables
+
+Click:
+
+Create route table
+Configure
+Name
+Public-RT
+VPC
+MyVPC
+Create
+
+Click:
+
+Create route table
+10. Add Internet Route
+Edit Routes
+
+Open:
+
+Public-RT
+
+Go to:
+
+Routes
+
+Click:
+
+Edit routes
+
+Click:
+
+Add route
+Configure Route
+Destination
+0.0.0.0/0
+Target
+
+Select:
+
+Internet Gateway
+
+Choose:
+
+MyIGW
+Save
+
+Click:
+
+Save changes
+11. Associate Public Subnets
+Subnet Associations
+
+Open:
+
+Public-RT
+
+Go to:
+
+Subnet associations
+
+Click:
+
+Edit subnet associations
+Select Subnets
+
+Tick:
+
+Public-Subnet-1
+Public-Subnet-2
+Save
+
+Click:
+
+Save associations
+12. Create NAT Gateway
+Open NAT Gateways
+Left sidebar → NAT Gateways
+
+Click:
+
+Create NAT gateway
+Configure
+Name
+MyNAT
+Subnet
+
+Select:
+
+Public-Subnet-1
+Allocate Elastic IP
+
+Click:
+
+Allocate Elastic IP
+Create
+
+Click:
+
+Create NAT gateway
+
+Wait until status becomes:
+
+Available
+13. Create Private Route Table
+Create Route Table
+Name
+Private-RT
+VPC
+MyVPC
+
+Click:
+
+Create route table
+14. Add NAT Route
+Edit Routes
+
+Open:
+
+Private-RT
+Routes → Edit routes
+Add route
+Configure
+Destination
+0.0.0.0/0
+Target
+
+Select:
+
+NAT Gateway
+
+Choose:
+
+MyNAT
+Save
+
+Click:
+
+Save changes
+15. Associate Private Subnets
+Edit Associations
+
+Open:
+
+Private-RT
+Subnet associations → Edit subnet associations
+Select
+
+Tick:
+
+Private-Subnet-1
+Private-Subnet-2
+Save
+
+Click:
+
+Save associations
+16. Create Security Group
+Open Security Groups
+Left sidebar → Security Groups
+
+Click:
+
+Create security group
+Configure
+Name
+Web-SG
+VPC
+MyVPC
+Add Inbound Rule
+Type
+HTTP
+Port
+80
+Source
+Anywhere IPv4
+Create
+
+Click:
+
+Create security group
+17. Launch EC2 Instance
+Open EC2
+
+Search:
+
+EC2
+Launch Instance
+Instances → Launch instances
+Configure
+Name
+WebServer
+AMI
+Amazon Linux 2
+Instance Type
+t2.micro
+Key Pair
+
+Select/create key pair.
+
+Network Settings
+
+Click:
+
+Edit
+Select VPC
+
+Choose:
+
+MyVPC
+Select Public Subnet
+
+Choose:
+
+Public-Subnet-1
+Auto Assign Public IP
+
+Enable:
+
+Enable
+Security Group
+
+Select:
+
+Web-SG
+18. Add User Data Script
+
+Scroll to:
+
+Advanced details
+
+Paste:
+
+#!/bin/bash
+yum update -y
+yum install httpd -y
+systemctl start httpd
+systemctl enable httpd
+echo "<h1>Welcome to AWS Web Server</h1>" > /var/www/html/index.html
+19. Launch Instance
+
+Click:
+
+Launch instance
+20. Verify Web Server
+Copy Public DNS
+Open instance
+
+Copy:
+
+Public IPv4 DNS
+
+Example:
+
+ec2-13-233-xx-xx.ap-south-1.compute.amazonaws.com
+Open Browser
+
+Paste:
+
+http://<Public-DNS>
+Expected Result
+
+You should see:
+
+Welcome to AWS Web Server
