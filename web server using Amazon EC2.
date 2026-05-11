@@ -1,0 +1,285 @@
+Using Amazon Web Services, set up and configure a basic web server using Amazon
+EC2.
+You are required to launch a virtual machine, install and run a web server, configure
+network access, and modify instance resources to meet application requirements.
+Steps to Execute:
+1. Launch an Amazon EC2 instance using a suitable AMI (e.g., Amazon
+Linux/Ubuntu).
+2. Connect to the instance and install the Apache Web Server.
+3. Start and enable the Apache service.
+4. Modify the instance’s security group to allow HTTP (port 80) access.
+5. Verify the web server by accessing it through the instance’s public IP
+address.
+6. Resize the instance by:
+• Changing the instance type
+• Modifying the EBS storage volume
+
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to your AWS account.
+2. Open EC2 Service
+
+In top search bar type:
+
+EC2
+Open
+Amazon Elastic Compute Cloud
+3. Launch EC2 Instance
+Open Instances
+Left sidebar → Instances
+
+Click:
+
+Launch instances
+Configure Instance
+Name
+
+Enter:
+
+WebServer
+Select AMI
+
+Choose either:
+
+Amazon Linux 2
+
+OR
+
+Ubuntu
+
+Example used:
+
+Amazon Linux 2
+Instance Type
+
+Select:
+
+t2.micro
+Key Pair
+
+Click:
+
+Create new key pair
+
+Name:
+
+my-key
+Download .pem file
+Network Settings
+
+Click:
+
+Edit
+Allow Traffic
+
+Tick:
+
+Allow SSH traffic
+
+Source:
+
+Anywhere
+Launch Instance
+
+Click:
+
+Launch instance
+
+Instance created successfully.
+
+4. Connect to EC2 Instance
+Open Instance
+Left sidebar → Instances
+
+Select:
+
+WebServer
+Connect
+
+Click:
+
+Connect
+
+Open:
+
+EC2 Instance Connect
+
+Click:
+
+Connect
+
+Terminal opens.
+
+5. Install Apache Web Server
+For Amazon Linux
+
+Run:
+
+sudo yum update -y
+
+Then run:
+
+sudo yum install httpd -y
+For Ubuntu
+
+Run:
+
+sudo apt update
+
+Then:
+
+sudo apt install apache2 -y
+6. Start Apache Service
+Amazon Linux
+
+Run:
+
+sudo systemctl start httpd
+Ubuntu
+
+Run:
+
+sudo systemctl start apache2
+7. Enable Apache Service
+
+This ensures Apache starts automatically after reboot.
+
+Amazon Linux
+
+Run:
+
+sudo systemctl enable httpd
+Ubuntu
+
+Run:
+
+sudo systemctl enable apache2
+8. Configure Security Group for HTTP Access
+Open Security Groups
+Go back to AWS Console
+Select your instance
+
+Open:
+
+Security
+Click security group link
+Edit Inbound Rules
+
+Click:
+
+Edit inbound rules
+
+Click:
+
+Add rule
+Add HTTP Rule
+Type
+HTTP
+Port
+80
+Source
+Anywhere IPv4
+Save
+
+Click:
+
+Save rules
+9. Verify Web Server
+Copy Public IP
+
+Go to:
+
+Instances
+Select your instance
+
+Copy:
+
+Public IPv4 address
+
+Example:
+
+13.233.xxx.xxx
+Open Browser
+
+In browser type:
+
+http://<Public-IP>
+
+Example:
+
+http://13.233.xxx.xxx
+Expected Result
+
+You should see:
+
+Apache Test Page
+OR
+Amazon Linux Apache page
+
+Web server working successfully.
+
+10. Change Instance Type (Resize Instance)
+Stop Instance
+Select instance
+
+Click:
+
+Instance state → Stop instance
+
+Wait until status becomes:
+
+Stopped
+Change Instance Type
+
+Click:
+
+Actions → Instance settings → Change instance type
+Select new type.
+
+Example:
+
+t2.small
+
+Click:
+
+Apply
+Start Instance
+
+Click:
+
+Instance state → Start instance
+11. Modify EBS Storage Volume
+Open Volumes
+Left sidebar → Volumes
+Select Root Volume
+Find volume attached to your instance
+Select it
+Modify Volume
+
+Click:
+
+Actions → Modify volume
+Increase Storage
+
+Example:
+
+Change from:
+
+8 GiB
+
+to:
+
+15 GiB
+Save
+
+Click:
+
+Modify
+
+Then:
+
+Yes
+
+Volume resized successfully.
