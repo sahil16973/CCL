@@ -1,0 +1,220 @@
+Using Amazon Web Services, implement a Platform as a Service (PaaS) solution by
+deploying a web application using AWS Elastic Beanstalk.
+Tasks to be Performed
+1. Open AWS Elastic Beanstalk from the AWS Management Console.
+2. Create a new Elastic Beanstalk application.
+3. Configure an environment (Web Server Environment).
+4. Select a suitable platform (e.g., Node.js, Python, or PHP).
+5. Upload application source code or use a sample application.
+6. Configure environment settings:
+o Instance type (within Free Tier)
+o Key pair for access
+o Auto-scaling configuration
+7. Deploy the application
+8. Access the application using the generated URL.
+9. Monitor application health and performance using the dashboard.
+10.Manage the environment (restart, rebuild, or terminate).
+
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to your AWS account.
+2. Open Elastic Beanstalk
+
+In top search bar type:
+
+Elastic Beanstalk
+Open
+AWS Elastic Beanstalk
+3. Create New Application
+Open Applications
+
+Click:
+
+Create application
+4. Configure Application
+Application Name
+
+Enter:
+
+MyWebApp
+Environment Type
+
+Select:
+
+Web server environment
+5. Select Platform
+
+Under:
+
+Platform
+
+Choose platform.
+
+Example:
+
+Python
+
+OR
+
+Node.js
+PHP
+Platform Branch
+
+Keep default version.
+
+6. Upload Application Code
+Application Code
+
+Choose either:
+
+Option 1 — Sample Application
+
+Select:
+
+Sample application
+
+(Recommended for lab/demo)
+
+OR Option 2 — Upload Your Code
+
+Select:
+
+Upload your code
+Upload ZIP file containing app source code
+7. Configure Environment Settings
+Presets
+
+Select:
+
+Single instance (Free Tier eligible)
+Instance Type
+
+Keep:
+
+t2.micro
+
+OR
+
+t3.micro
+Key Pair
+
+Under:
+
+EC2 key pair
+
+Select your existing key pair.
+
+Example:
+
+my-key
+8. Configure Auto Scaling
+Capacity Settings
+
+Keep minimum and maximum instances:
+
+Minimum
+1
+Maximum
+1
+
+(Within Free Tier)
+
+9. Create Application
+
+Click:
+
+Create application
+10. Wait for Deployment
+
+Elastic Beanstalk will automatically:
+
+Create EC2 instance
+Configure load balancer (if needed)
+Deploy application
+Configure security groups
+
+Wait until status becomes:
+
+Health: Green
+
+and
+
+Environment successfully launched
+11. Access the Application
+Copy Application URL
+
+Inside environment dashboard find:
+
+Domain
+
+Example:
+
+http://mywebapp-env.eba-xxxxx.ap-south-1.elasticbeanstalk.com
+Open URL
+Open browser
+Paste generated URL
+Expected Result
+
+Sample application/web app loads successfully.
+
+12. Monitor Application Health
+Environment Dashboard
+
+Inside Elastic Beanstalk dashboard monitor:
+
+Health Status
+Green / OK
+Metrics
+CPU utilization
+Requests
+Latency
+Instance health
+13. Monitor Logs and Performance
+Monitoring
+Left sidebar → Monitoring
+
+View:
+
+CPU usage
+Network traffic
+Request count
+Logs
+
+Click:
+
+Logs
+Request logs from EC2 instance if needed.
+14. Restart Environment
+Restart App Server
+
+Select:
+
+Actions
+
+Click:
+
+Restart app server(s)
+15. Rebuild Environment
+Rebuild
+
+Actions →
+
+Rebuild environment
+
+This recreates resources.
+
+16. Terminate Environment
+Terminate
+
+Actions →
+
+Terminate environment
+Type environment name for confirmation
+
+Click:
+
+Terminate
+
+All resources deleted.
