@@ -1,0 +1,304 @@
+Using Amazon Web Services and Terraform, implement automated cloud infrastructure
+provisioning through Infrastructure as Code (IaC).
+Tasks to be Performed
+1. Install and configure Terraform on your system.
+2. Create a working directory and initialize Terraform using terraform init.
+3. Configure AWS provider with appropriate credentials.
+4. Write a Terraform configuration file to:
+5. Launch an Amazon EC2 instance
+6. Define instance type and AMI
+7. Configure security group to allow SSH/HTTP access
+8. Use Terraform commands to preview infrastructure changes and provision
+resources
+9. Verify that the EC2 instance is successfully created on AWS.
+10.Access the instance using SSH and validate deployment.
+11. Terminate all created resources.
+
+1. Install Terraform
+Download Terraform
+
+Open:
+
+Terraform Download Page
+
+Install
+Download Terraform for your OS:
+Windows
+Linux
+macOS
+Extract ZIP file
+Move terraform.exe to a folder.
+
+Example:
+
+C:\Terraform
+Add Terraform to PATH (Windows)
+
+Search:
+
+Environment Variables
+
+Open:
+
+Edit the system environment variables
+
+Click:
+
+Environment Variables
+
+Under:
+
+System Variables
+
+select:
+
+Path
+
+Click:
+
+Edit → New
+
+Add:
+
+C:\Terraform
+
+Click:
+
+OK
+Verify Terraform
+
+Open CMD/Terminal and run:
+
+terraform -version
+
+Expected output:
+
+Terraform v1.x.x
+2. Install AWS CLI
+Download AWS CLI
+
+Open:
+
+AWS CLI Download
+
+Install AWS CLI.
+
+Verify Installation
+
+Run:
+
+aws --version
+3. Configure AWS Credentials
+Create IAM Access Key
+Login to AWS Console
+Open IAM
+Left sidebar → Users
+Open your user
+
+Go to:
+
+Security credentials
+
+Scroll to:
+
+Access keys
+
+Click:
+
+Create access key
+
+Select:
+
+Command Line Interface (CLI)
+Create key
+Copy:
+Access Key ID
+Secret Access Key
+Configure AWS CLI
+
+Run:
+
+aws configure
+
+Enter:
+
+Access Key
+AWS Access Key ID
+Secret Key
+AWS Secret Access Key
+Region
+
+Example:
+
+ap-south-1
+Output Format
+json
+
+AWS credentials configured.
+
+4. Create Terraform Working Directory
+Create Folder
+
+Example:
+
+terraform-aws
+Open Terminal Inside Folder
+
+Run:
+
+cd terraform-aws
+5. Create Terraform Configuration File
+
+Create file:
+
+main.tf
+6. Add Terraform Code
+
+Paste this code into main.tf
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_security_group" "web_sg" {
+  name = "web-sg"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_instance" "web_server" {
+  ami           = "ami-0f58b397bc5c1f2e8"
+  instance_type = "t2.micro"
+
+  security_groups = [aws_security_group.web_sg.name]
+
+  tags = {
+    Name = "Terraform-EC2"
+  }
+}
+7. Initialize Terraform
+
+Run:
+
+terraform init
+
+Expected:
+
+Terraform has been successfully initialized
+8. Preview Infrastructure Changes
+
+Run:
+
+terraform plan
+
+Terraform shows:
+
+EC2 instance to be created
+Security group to be created
+9. Provision Infrastructure
+
+Run:
+
+terraform apply
+
+Type:
+
+yes
+
+Press Enter.
+
+Terraform creates:
+
+EC2 instance
+Security group
+10. Verify EC2 Instance on AWS
+Open EC2 Console
+
+Search:
+
+EC2
+Open
+Amazon Elastic Compute Cloud
+Verify Instance
+Left sidebar → Instances
+
+You should see:
+
+Terraform-EC2
+
+Status:
+
+Running
+11. Connect to EC2 using SSH
+Create Key Pair (If Needed)
+
+In AWS Console:
+
+EC2 → Key Pairs
+Create key pair
+Download .pem file
+Attach Key Pair in Terraform (Optional)
+
+Add inside aws_instance block:
+
+key_name = "my-key"
+
+Run again:
+
+terraform apply
+12. Connect Using SSH
+Get Public IP
+
+Open EC2 instance and copy:
+
+Public IPv4 address
+SSH Command (Linux/macOS)
+
+Run:
+
+ssh -i my-key.pem ec2-user@<Public-IP>
+
+Example:
+
+ssh -i my-key.pem ec2-user@13.233.xxx.xxx
+Validate Deployment
+
+After login run:
+
+hostname
+
+Instance accessible successfully.
+
+13. Destroy Infrastructure
+
+To terminate all created resources run:
+
+terraform destroy
+
+Type:
+
+yes
+
+Terraform deletes:
+
+EC2 instance
+Security group
