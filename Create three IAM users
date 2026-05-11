@@ -1,0 +1,255 @@
+Step-by-Step Procedure to Complete the IAM Task
+1. Login to AWS
+Open
+AWS Console
+Login to your AWS account.
+2. Open IAM Service
+
+In top search bar type:
+
+IAM
+Open
+AWS Identity and Access Management
+3. Create Group — S3-Support
+Left sidebar → User groups
+Click Create group
+
+Group name:
+
+S3-Support
+
+Under permissions search:
+
+AmazonS3ReadOnlyAccess
+Tick checkbox
+Click Create group
+4. Create Group — EC2-Support
+Click Create group
+
+Group name:
+
+EC2-Support
+
+Search:
+
+AmazonEC2ReadOnlyAccess
+Tick checkbox
+Click Create group
+5. Create Custom Policy for EC2-Admin
+Left sidebar → Policies
+Click Create policy
+Click JSON
+Remove existing code
+Paste this:
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "EC2ViewOnly",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:Describe*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "EC2StartStop",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:StartInstances",
+                "ec2:StopInstances"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+Click Next
+
+Policy name:
+
+EC2-StartStop-View
+Click Create policy
+6. Create Group — EC2-Admin
+Left sidebar → User groups
+Click Create group
+
+Group name:
+
+EC2-Admin
+
+Search:
+
+EC2-StartStop-View
+Tick checkbox
+Click Create group
+7. Create User — user-1
+Left sidebar → Users
+Click Create user
+
+Username:
+
+user-1
+
+Tick:
+
+Provide user access to AWS Management Console
+
+Select:
+
+I want to create an IAM user
+
+Choose:
+
+Custom password
+Enter password
+Click Next
+
+Select:
+
+Add user to group
+Tick:
+S3-Support
+Click Next
+Click Create user
+8. Create User — user-2
+
+Repeat same steps.
+
+Username:
+user-2
+Group:
+EC2-Support
+9. Create User — user-3
+
+Repeat same steps.
+
+Username:
+user-3
+Group:
+EC2-Admin
+10. Enable MFA for user-1
+
+Go to:
+
+Users
+
+Open:
+
+user-1
+
+Open tab:
+
+Security credentials
+
+Scroll to:
+
+Multi-factor authentication (MFA)
+
+Click:
+
+Assign MFA device
+
+Select:
+
+Authenticator app
+Click Next
+Scan QR code using:
+Google Authenticator
+Enter two OTP codes
+Click:
+Add MFA
+11. Repeat MFA for
+user-2
+user-3
+12. Create MFA Enforcement Policy
+Left sidebar → Policies
+Click Create policy
+Click JSON
+Paste:
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyAllExceptListedIfNoMFA",
+      "Effect": "Deny",
+      "NotAction": [
+        "iam:CreateVirtualMFADevice",
+        "iam:EnableMFADevice",
+        "iam:GetUser",
+        "iam:ListMFADevices",
+        "iam:ListVirtualMFADevices",
+        "iam:ResyncMFADevice",
+        "sts:GetSessionToken"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "BoolIfExists": {
+          "aws:MultiFactorAuthPresent": "false"
+        }
+      }
+    }
+  ]
+}
+Click Next
+
+Policy name:
+
+Enforce-MFA
+Click Create policy
+13. Attach MFA Policy to Groups
+Attach to S3-Support
+Left sidebar → User groups
+
+Open:
+
+S3-Support
+
+Click:
+
+Add permissions
+
+Select:
+
+Attach policies
+
+Search:
+
+Enforce-MFA
+Tick checkbox
+
+Click:
+
+Add permissions
+Repeat Same for:
+EC2-Support
+EC2-Admin
+14. Verify Permissions
+Login as user-1
+Should:
+
+✅ View S3
+
+Should NOT:
+
+❌ Modify S3
+❌ Access EC2
+
+Login as user-2
+Should:
+
+✅ View EC2
+
+Should NOT:
+
+❌ Start/Stop EC2
+
+Login as user-3
+Should:
+
+✅ View EC2
+✅ Start EC2
+✅ Stop EC2
+
+Should NOT:
+
+❌ Terminate EC2
