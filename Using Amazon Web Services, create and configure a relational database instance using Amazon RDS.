@@ -1,0 +1,302 @@
+Using Amazon Web Services, create and configure a relational database instance using
+Amazon RDS.
+Task
+1. Amazon RDS from the AWS Console.
+2. Create a new database using Standard Create.
+3. Select MySQL or PostgreSQL.
+4. Configure the DB instance class
+5. Create administrator username and password.
+6. Configure storage within Free Tier limits.
+7. Enable public access for remote database connectivity.
+8. Enable automatic backups for the database instance.
+9. Connect to the database using a database client (e.g., MySQL
+Workbench/psql).
+10.Verify connectivity by creating a sample table and inserting records.
+
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to your AWS account.
+2. Open Amazon RDS
+
+In top search bar type:
+
+RDS
+Open
+Amazon Relational Database Service
+3. Create Database
+Left sidebar → Databases
+
+Click:
+
+Create database
+4. Choose Database Creation Method
+
+Under:
+
+Choose a database creation method
+
+Select:
+
+Standard create
+5. Choose Database Engine
+
+Select either:
+
+MySQL
+
+OR
+
+PostgreSQL
+
+Example:
+
+MySQL
+6. Choose Version
+
+Keep default version selected.
+
+7. Templates
+
+Under:
+
+Templates
+
+Select:
+
+Free tier
+8. Configure DB Instance
+DB Instance Identifier
+
+Enter:
+
+mydatabase
+Master Username
+
+Enter:
+
+admin
+Master Password
+
+Enter password.
+
+Example:
+
+Admin@123
+
+Confirm password again.
+
+9. Configure Instance Class
+
+Under:
+
+DB instance class
+
+Keep Free Tier option:
+
+db.t3.micro
+
+OR
+
+db.t2.micro
+
+(depending on availability)
+
+10. Configure Storage
+
+Under:
+
+Storage
+
+Keep default Free Tier settings.
+
+Example:
+
+20 GiB
+
+Storage type:
+
+General Purpose SSD (gp2/gp3)
+11. Configure Connectivity
+Public Access
+
+Under:
+
+Connectivity
+
+Set:
+
+Public access → Yes
+VPC Security Group
+
+Choose:
+
+Create new security group
+12. Configure Additional Settings
+Database Name
+
+Under:
+
+Additional configuration
+
+Enter:
+
+sampledb
+13. Enable Automatic Backups
+
+Under:
+
+Backup
+
+Ensure:
+
+Enable automated backups
+
+is checked.
+
+Keep default backup retention period.
+
+14. Create Database
+
+Scroll down and click:
+
+Create database
+15. Wait for Database Creation
+
+Status will show:
+
+Creating
+
+Wait until status changes to:
+
+Available
+
+(This may take 5–10 minutes)
+
+16. Configure Security Group for Remote Access
+Open EC2 Security Groups
+
+Search:
+
+EC2
+Left sidebar → Security Groups
+Open RDS Security Group
+Find security group attached to RDS
+Open it
+Edit Inbound Rules
+
+Click:
+
+Edit inbound rules
+
+Click:
+
+Add rule
+Add MySQL/PostgreSQL Rule
+For MySQL
+
+Type:
+
+MySQL/Aurora
+
+Port:
+
+3306
+
+Source:
+
+Anywhere IPv4
+OR For PostgreSQL
+
+Type:
+
+PostgreSQL
+
+Port:
+
+5432
+
+Source:
+
+Anywhere IPv4
+Save
+
+Click:
+
+Save rules
+17. Copy RDS Endpoint
+Open Database
+
+Go back to:
+
+RDS → Databases
+Open your database
+Copy Endpoint
+
+Under:
+
+Connectivity & security
+
+Copy:
+
+Endpoint
+
+Example:
+
+mydatabase.abc123.ap-south-1.rds.amazonaws.com
+18. Connect Using MySQL Workbench
+Open MySQL Workbench
+
+Download if needed:
+
+MySQL Workbench
+
+Create New Connection
+Hostname
+
+Paste RDS endpoint
+
+Port
+3306
+Username
+admin
+Password
+
+Enter DB password
+
+Test Connection
+
+Click:
+
+Test Connection
+
+Expected:
+
+Successfully connected
+19. Create Sample Database Table
+
+Open SQL editor and run:
+
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT
+);
+20. Insert Records
+
+Run:
+
+INSERT INTO students VALUES (1,'Sahil',20);
+INSERT INTO students VALUES (2,'Rahul',21);
+21. Verify Records
+
+Run:
+
+SELECT * FROM students;
+
+Expected Output:
+
+id	name	age
+1	Sahil	20
+2	Rahul	21
