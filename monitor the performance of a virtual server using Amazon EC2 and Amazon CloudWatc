@@ -1,0 +1,280 @@
+Using Amazon Web Services, monitor the performance of a virtual server using Amazon
+EC2 and Amazon CloudWatch.
+Tasks to be Performed
+1. Launch an EC2 instance using Amazon Linux .
+2. Navigate to Amazon CloudWatch from the AWS Management Console.
+3. Access Metrics → EC2 to view instance performance data.
+4. Monitor key metrics such as:
+o CPUUtilization
+o DiskReadOps
+o NetworkIn/NetworkOut
+5. Create a CloudWatch Alarm for the EC2 instance.
+6. Configure the alarm condition: trigger when CPU utilization exceeds 70%.
+7. Attach a notification action (SNS or email alert).
+8. Verify alarm functionality by generating load on the instance.
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to your AWS account.
+2. Open EC2 Service
+
+In top search bar type:
+
+EC2
+Open
+Amazon Elastic Compute Cloud
+3. Launch EC2 Instance
+Open Instances
+Left sidebar → Instances
+
+Click:
+
+Launch instances
+Configure Instance
+Name
+
+Enter:
+
+CloudWatch-Server
+AMI
+
+Select:
+
+Amazon Linux 2 AMI
+Instance Type
+
+Select:
+
+t2.micro
+Key Pair
+
+Click:
+
+Create new key pair
+
+Name:
+
+my-key
+Download .pem file
+Network Settings
+
+Allow:
+
+SSH
+
+Source:
+
+Anywhere
+Launch
+
+Click:
+
+Launch instance
+4. Open CloudWatch
+
+In top search bar type:
+
+CloudWatch
+Open
+Amazon CloudWatch
+5. View EC2 Metrics
+Open Metrics
+Left sidebar → Metrics
+
+Click:
+
+All metrics
+Open EC2 Metrics
+
+Select:
+
+EC2
+
+Click:
+
+Per-Instance Metrics
+6. Monitor Performance Metrics
+
+Find your EC2 instance and monitor:
+
+CPU Utilization
+
+Select:
+
+CPUUtilization
+
+Shows CPU usage percentage.
+
+Disk Read Operations
+
+Select:
+
+DiskReadOps
+
+Shows disk read activity.
+
+Network Traffic
+
+Select:
+
+NetworkIn
+
+and
+
+NetworkOut
+
+Shows incoming/outgoing network traffic.
+
+7. Create CloudWatch Alarm
+Select CPUUtilization Metric
+
+Tick checkbox beside:
+
+CPUUtilization
+
+Click:
+
+Create alarm
+8. Configure Alarm Condition
+Metric Condition
+
+Under:
+
+Whenever CPUUtilization is...
+
+Set:
+
+Condition
+Greater than
+Threshold value
+70
+
+Meaning:
+
+alarm triggers if CPU usage exceeds 70%
+Next
+
+Click:
+
+Next
+9. Configure Notification
+Create SNS Topic
+
+Under:
+
+Send a notification to
+
+Select:
+
+Create new topic
+Topic Name
+
+Enter:
+
+EC2-CPU-Alert
+Email Address
+
+Enter your email address.
+
+Example:
+
+yourname@gmail.com
+Next
+
+Click:
+
+Next
+10. Name the Alarm
+Alarm Name
+
+Enter:
+
+High-CPU-Alarm
+Create Alarm
+
+Click:
+
+Create alarm
+11. Confirm SNS Email Subscription
+Open your email inbox
+You will receive AWS SNS email
+
+Click:
+
+Confirm subscription
+
+Notification setup completed.
+
+12. Connect to EC2 Instance
+Open EC2
+
+Go back to:
+
+EC2 → Instances
+
+Select:
+
+CloudWatch-Server
+Connect
+
+Click:
+
+Connect
+
+Choose:
+
+EC2 Instance Connect
+
+Click:
+
+Connect
+
+Terminal opens.
+
+13. Generate CPU Load
+
+Run this command:
+
+yes > /dev/null
+
+This increases CPU utilization.
+
+Keep terminal running for few minutes.
+
+14. Verify Alarm Trigger
+Open CloudWatch
+
+Search:
+
+CloudWatch
+Left sidebar → Alarms
+
+Open:
+
+High-CPU-Alarm
+Expected Result
+
+Alarm state changes from:
+
+OK
+
+to
+
+In Alarm
+15. Verify Email Notification
+
+Check your email inbox.
+
+You should receive alert email from AWS SNS saying:
+
+CPU utilization exceeded threshold
+16. Stop CPU Load
+
+Return to terminal.
+
+Press:
+
+CTRL + C
+
+This stops CPU stress.
