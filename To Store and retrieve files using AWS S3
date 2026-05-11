@@ -1,0 +1,152 @@
+To Store and retrieve files using AWS S3
+Task
+1. Open Amazon S3 from the AWS Console.
+2. Create a new S3 bucket with default settings.
+3. Upload files such as images and text documents.
+4. Configure public access permissions for uploaded files.
+5. Access and verify the uploaded files using S3 URLs
+
+
+
+2. Open Amazon S3
+
+In top search bar type:
+
+S3
+Open
+Amazon Simple Storage Service
+3. Create S3 Bucket
+Open Buckets Section
+Left sidebar → Buckets
+
+Click:
+
+Create bucket
+Configure Bucket
+Bucket Name
+
+Enter unique bucket name.
+
+Example:
+
+sahil-demo-bucket-123
+AWS Region
+
+Select nearest region.
+
+Example:
+
+Asia Pacific (Mumbai) ap-south-1
+Keep Default Settings
+
+Do NOT change anything else.
+
+Create Bucket
+
+Scroll down and click:
+
+Create bucket
+
+Bucket created successfully.
+
+4. Open the Bucket
+
+Click on your bucket name:
+
+sahil-demo-bucket-123
+5. Upload Files
+Upload Images/Text Files
+
+Click:
+
+Upload
+
+Click:
+
+Add files
+Select:
+image files
+text files
+from your computer
+Upload
+
+Click:
+
+Upload
+
+Files uploaded successfully.
+
+6. Configure Public Access
+
+By default files are private.
+
+We now make files publicly accessible.
+
+Disable Block Public Access
+Open uploaded file
+
+Click:
+
+Permissions
+
+Scroll to:
+
+Block public access
+
+Click:
+
+Edit
+
+Untick:
+
+Block all public access
+Tick acknowledgment checkbox
+
+Click:
+
+Save changes
+7. Make File Public
+Open Object Permissions
+Open uploaded file
+
+Go to:
+
+Permissions
+Edit Object Access
+
+Scroll to:
+
+Object Ownership / Access Control List (ACL)
+
+Click:
+
+Edit
+Grant Public Read Access
+
+Under:
+
+Everyone (public access)
+
+Tick:
+
+Read
+Save changes
+
+Public access enabled.
+
+8. Access File Using S3 URL
+Copy Object URL
+Open uploaded file
+Scroll down
+
+Find:
+
+Object URL
+
+Example:
+
+https://sahil-demo-bucket-123.s3.ap-south-1.amazonaws.com/sample.txt
+9. Verify Uploaded File
+Copy Object URL
+Open new browser tab
+Paste URL
