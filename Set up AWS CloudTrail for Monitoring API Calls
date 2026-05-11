@@ -1,0 +1,148 @@
+Problem: Set up AWS CloudTrail for Monitoring API Calls
+Tasks to be Performed
+1. Open CloudTrail from Console.
+2. Create a Trail & Apply to all regions.
+3. Create a new S3 bucket for log storage.
+4. Perform an AWS action (e.g., stop/start EC2).
+5. Check if CloudTrail logs the action.
+
+1. Login to AWS Console
+Open
+AWS Console
+Login to your AWS account.
+2. Open CloudTrail Service
+
+In top search bar type:
+
+CloudTrail
+Open
+AWS CloudTrail
+3. Create a Trail
+Open Trails
+Left sidebar → Trails
+
+Click:
+
+Create trail
+4. Configure Trail
+Trail Name
+
+Enter:
+
+MyTrail
+Apply Trail to All Regions
+
+Under:
+
+Choose log events
+
+Select:
+
+Enable for all regions
+5. Create S3 Bucket for Logs
+Storage Location
+
+Under:
+
+Storage location
+
+Choose:
+
+Create new S3 bucket
+Bucket Name
+
+Enter unique bucket name.
+
+Example:
+
+cloudtrail-logs-sahil123
+6. Keep Default Settings
+
+Do not change other settings.
+
+7. Create Trail
+
+Click:
+
+Create trail
+
+CloudTrail setup completed.
+
+8. Perform an AWS Action
+
+Now perform any AWS action so CloudTrail can log it.
+
+Example:
+
+Stop EC2 instance
+Start EC2 instance
+9. Open EC2
+
+Search:
+
+EC2
+Open
+Amazon Elastic Compute Cloud
+10. Stop or Start an Instance
+Open Instances
+Left sidebar → Instances
+Select an EC2 instance
+Perform Action
+
+Click:
+
+Instance state
+
+Choose either:
+
+Stop instance
+
+OR
+
+Start instance
+
+Action performed successfully.
+
+11. Verify CloudTrail Logs
+Open CloudTrail
+
+Search:
+
+CloudTrail
+Open Event History
+Left sidebar → Event history
+12. Check Logged Action
+
+You will see events like:
+
+StartInstances
+StopInstances
+Verify Details
+
+Click event name.
+
+You can view:
+
+Username
+Time of action
+EC2 instance ID
+API event name
+Source IP address
+13. Verify Logs in S3 Bucket (Optional)
+Open S3
+
+Search:
+
+S3
+Open created CloudTrail bucket
+
+Example:
+
+cloudtrail-logs-sahil123
+Open Log Files
+
+Navigate folders:
+
+AWSLogs → Account-ID → CloudTrail
+
+You will see CloudTrail log files stored automatically.
