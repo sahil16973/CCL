@@ -1,3 +1,15 @@
+Create three IAM users: user-1, user-2, and user-3, and assign them to appropriate IAM groups. 
+Each group should have specific permissions attached according to the organizational policy. 
+User Group Permissions user-1 S3-Support Read-only access to Amazon S3 user-2 EC2-Support Read-only access to Amazon EC2 1 2 user-3 EC2-Admin View, Start, and Stop Amazon EC2 instances 
+Tasks: 1. Create the required IAM groups: S3-Support, EC2-Support, and EC2-Admin. 
+2. Attach appropriate managed policies to each group based on the permissions specified. 
+3. Create IAM users: user-1, user-2, and user-3. 
+4. Implement Multi-Factor Authentication (MFA) for all users and enforce it using an IAM policy. 
+5. Assign each user to the corresponding group. 
+6. Verify that permissions are correctly applied by testing access levels.
+
+
+
 Step-by-Step Procedure to Complete the IAM Task
 1. Login to AWS
 Open
