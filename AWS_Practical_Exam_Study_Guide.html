@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Practical Exam — Complete Study Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --surface: #0f1526;
+    --surface2: #141c30;
+    --border: #1e2d4a;
+    --accent: #f97316;
+    --accent2: #3b82f6;
+    --accent3: #22c55e;
+    --accent4: #a855f7;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-faint: #475569;
+    --warn: #fbbf24;
+    --danger: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0f1526 0%, #0a0e1a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(249,115,22,0.15);
+    border: 1px solid rgba(249,115,22,0.35);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+  header h1 span { color: var(--accent); }
+  header p {
+    color: var(--text-dim);
+    font-size: 15px;
+    max-width: 600px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .meta-pill .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .toc a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .toc a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px; }
+
+  /* ── PHASE HEADER ── */
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.3);
+    color: var(--accent2);
+    padding: 6px 14px;
+    border-radius: 4px;
+  }
+  .phase-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  /* ── EXPERIMENT CARD ── */
+  .exp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: #2a3d5e; }
+
+  .exp-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .exp-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(249,115,22,0.12);
+    border: 1px solid rgba(249,115,22,0.25);
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .exp-services {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .svc-tag {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+  .svc-iam    { color: #f97316; border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.08); }
+  .svc-ec2    { color: #3b82f6; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.08); }
+  .svc-s3     { color: #22c55e; border-color: rgba(34,197,94,0.3);  background: rgba(34,197,94,0.08); }
+  .svc-rds    { color: #a855f7; border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.08); }
+  .svc-cw     { color: #fbbf24; border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.08); }
+  .svc-vpc    { color: #06b6d4; border-color: rgba(6,182,212,0.3);  background: rgba(6,182,212,0.08); }
+  .svc-ct     { color: #f43f5e; border-color: rgba(244,63,94,0.3);  background: rgba(244,63,94,0.08); }
+  .svc-tf     { color: #8b5cf6; border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.08); }
+  .svc-eb     { color: #14b8a6; border-color: rgba(20,184,166,0.3); background: rgba(20,184,166,0.08); }
+  .svc-ebs    { color: #fb923c; border-color: rgba(251,146,60,0.3); background: rgba(251,146,60,0.08); }
+
+  .exp-body { padding: 24px; }
+
+  /* ── SECTIONS INSIDE EXP ── */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent2);
+    margin-bottom: 10px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* concept box */
+  .concept-box {
+    background: rgba(59,130,246,0.06);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-left: 3px solid var(--accent2);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    font-size: 13.5px;
+  }
+  .concept-box strong { color: var(--text); }
+
+  /* step list */
+  .step-list { list-style: none; counter-reset: step; }
+  .step-list li {
+    counter-increment: step;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(30,45,74,0.6);
+    font-size: 13.5px;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before {
+    content: counter(step);
+    min-width: 24px; height: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* code block */
+  .code-block {
+    background: #060912;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #7dd3fc;
+    overflow-x: auto;
+    margin: 10px 0;
+    line-height: 1.8;
+  }
+  .code-block .cm  { color: #475569; }
+  .code-block .kw  { color: #c084fc; }
+  .code-block .str { color: #86efac; }
+  .code-block .num { color: #fbbf24; }
+
+  /* table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 10px 0;
+  }
+  .data-table th {
+    background: var(--surface2);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(30,45,74,0.4);
+    vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(15,21,38,0.5); }
+
+  /* tip / warn box */
+  .tip-box {
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 10px 0;
+  }
+  .tip-box.tip  { background: rgba(34,197,94,0.07);  border: 1px solid rgba(34,197,94,0.25); }
+  .tip-box.warn { background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.25); }
+  .tip-box.info { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.2); }
+  .tip-box.danger { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); }
+  .tip-icon { font-size: 15px; flex-shrink: 0; line-height: 1.6; }
+  .tip-text { color: var(--text-dim); }
+  .tip-text strong { color: var(--text); }
+
+  /* phase divider */
+  .phase-divider {
+    margin: 48px 0 36px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  /* key concepts grid */
+  .concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .concept-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+  }
+  .concept-chip .chip-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .concept-chip .chip-desc { color: var(--text-dim); font-size: 12px; }
+
+  /* verification checklist */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 7px 0;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    border-bottom: 1px dashed rgba(30,45,74,0.5);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '□';
+    color: var(--accent3);
+    font-size: 15px;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  /* inline code */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    background: rgba(59,130,246,0.12);
+    color: #7dd3fc;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  /* footer */
+  footer {
+    margin-top: 60px;
+    padding: 30px 40px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* scroll offset for anchors */
+  [id] { scroll-margin-top: 20px; }
+
+  @media (max-width: 700px) {
+    header { padding: 32px 20px 24px; }
+    header h1 { font-size: 26px; }
+    .container { padding: 24px 16px; }
+    .toc { padding: 16px 20px; }
+    .exp-services { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════ -->
+<header>
+  <div class="header-badge">CCL Practical Exam 2026</div>
+  <h1>AWS Complete<br><span>Study Guide</span></h1>
+  <p>All 11 experiments — concepts, step-by-step execution, commands, and verification checkpoints.</p>
+  <div class="header-meta">
+    <div class="meta-pill"><span class="dot" style="background:#f97316"></span> Phase 1: Theory & Concepts</div>
+    <div class="meta-pill"><span class="dot" style="background:#3b82f6"></span> Phase 2: Hands-on Steps</div>
+    <div class="meta-pill"><span class="dot" style="background:#22c55e"></span> 11 Experiments</div>
+    <div class="meta-pill"><span class="dot" style="background:#a855f7"></span> Commands Included</div>
+  </div>
+</header>
+
+<!-- TOC -->
+<nav class="toc">
+  <span class="toc-label">Jump to</span>
+  <a href="#q1">Q1 IAM</a>
+  <a href="#q2">Q2 EBS</a>
+  <a href="#q3">Q3 S3</a>
+  <a href="#q4">Q4 RDS</a>
+  <a href="#q5">Q5 Static Site</a>
+  <a href="#q6">Q6 CloudWatch</a>
+  <a href="#q7">Q7 Web Server</a>
+  <a href="#q8">Q8 VPC</a>
+  <a href="#q9a">Q9 CloudTrail</a>
+  <a href="#q9b">Q9b Terraform</a>
+  <a href="#q10">Q10 Beanstalk</a>
+</nav>
+
+<div class="container">
+
+<!-- ════════════════════════════════════════════
+     PHASE 1 — CONCEPTS
+════════════════════════════════════════════ -->
+<div class="phase-header">
+  <div class="phase-num">Phase 1</div>
+  <div class="phase-title">Theory & Key Concepts</div>
+</div>
+
+<!-- ── Q1 IAM ── -->
+<div class="exp-card" id="q1">
+  <div class="exp-header">
+    <span class="exp-num">Q1</span>
+    <span class="exp-title">IAM — Users, Groups, Policies & MFA</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-iam">IAM</span>
+      <span class="svc-tag svc-ec2">EC2</span>
+      <span class="svc-tag svc-s3">S3</span>
+    </div>
+  </div>
+  <div class="exp-body">
+
+    <div class="section-label">What is IAM?</div>
+    <div class="concept-box">
+      <strong>Identity and Access Management (IAM)</strong> is AWS's free service that controls <em>who</em> can do <em>what</em> on your AWS account. It is global (not region-specific). IAM follows the <strong>Principle of Least Privilege</strong> — give users only the permissions they absolutely need.
+    </div>
+
+    <div class="section-label">Core IAM Components</div>
+    <div class="concepts-grid">
+      <div class="concept-chip"><div class="chip-title">👤 Users</div><div class="chip-desc">Individual people/apps. Have permanent credentials (password + access keys).</div></div>
+      <div class="concept-chip"><div class="chip-title">👥 Groups</div><div class="chip-desc">Collection of users. Attach policies to groups, not individual users. Best practice.</div></div>
+      <div class="concept-chip"><div class="chip-title">📋 Policies</div><div class="chip-desc">JSON documents that define Allow/Deny for Actions on Resources. Attached to users/groups/roles.</div></div>
+      <div class="concept-chip"><div class="chip-title">🎭 Roles</div><div class="chip-desc">Temporary permissions. Used by EC2 instances, Lambda, cross-account access.</div></div>
+      <div class="concept-chip"><div class="chip-title">🔐 MFA</div><div class="chip-desc">Multi-Factor Auth. Second factor beyond password. Virtual (Google Authenticator) or hardware.</div></div>
+    </div>
+
+    <div class="section-label">Group → Policy Mapping (Exam Table)</div>
+    <table class="data-table">
+      <tr><th>Group</th><th>Policy</th><th>What the user CAN do</th><th>What they CANNOT do</th></tr>
+      <tr><td><code>S3-Support</code></td><td><code>AmazonS3ReadOnlyAccess</code></td><td>View/list S3 buckets & objects</td><td>Upload, delete, modify S3; anything EC2</td></tr>
+      <tr><td><code>EC2-Support</code></td><td><code>AmazonEC2ReadOnlyAccess</code></td><td>Describe/view EC2 instances</td><td>Start, stop, terminate instances</td></tr>
+      <tr><td><code>EC2-Admin</code></td><td><code>AmazonEC2FullAccess</code></td><td>View, start, stop, terminate EC2</td><td>S3 access (unless separately granted)</td></tr>
+    </table>
+
+    <div class="section-label">MFA Enforcement Policy Logic</div>
+    <div class="concept-box">
+      The custom <strong>MFA-Enforcement-Policy</strong> uses <code>BoolIfExists: aws:MultiFactorAuthPresent = false</code> as a condition to <strong>Deny everything</strong> except MFA-related actions. This means: if a user logs in without MFA, they can <em>only</em> set up their MFA device — nothing else works until they re-login with MFA.
+    </div>
+    <div class="tip-box warn"><span class="tip-icon">⚠️</span><div class="tip-text"><strong>Key exam point:</strong> MFA enforcement requires BOTH setting up the MFA device AND confirming subscription. Without clicking "Confirm Subscription" in email, SNS alerts don't reach you.</div></div>
+  </div>
+</div>
+
+<!-- ── Q2 EBS ── -->
+<div class="exp-card" id="q2">
+  <div class="exp-header">
+    <span class="exp-num">Q2</span>
+    <span class="exp-title">Amazon EBS — Storage, Backup & Data Recovery</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-ebs">EBS</span>
+      <span class="svc-tag svc-ec2">EC2</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">What is EBS?</div>
+    <div class="concept-box">
+      <strong>Elastic Block Store (EBS)</strong> is a persistent, network-attached block storage device for EC2. Think of it as a virtual hard drive. It persists independently of the EC2 instance lifecycle — data survives instance stop/start. EBS volumes are <strong>Availability Zone specific</strong> — you cannot attach a volume in us-east-1a to an instance in us-east-1b.
+    </div>
+
+    <div class="section-label">Key Concepts</div>
+    <div class="concepts-grid">
+      <div class="concept-chip"><div class="chip-title">📦 Volume</div><div class="chip-desc">The actual storage unit. Must be in same AZ as EC2 instance.</div></div>
+      <div class="concept-chip"><div class="chip-title">📸 Snapshot</div><div class="chip-desc">Point-in-time backup of a volume stored in S3 (managed by AWS). Used to create new volumes or copy across AZs.</div></div>
+      <div class="concept-chip"><div class="chip-title">🔄 Restore</div><div class="chip-desc">Create a new EBS volume FROM a snapshot. The data is immediately available. No need to run mkfs.</div></div>
+      <div class="concept-chip"><div class="chip-title">🗂️ Mount Point</div><div class="chip-desc">Linux directory where the volume is attached (e.g., /mnt/my-data). Must mount after attach.</div></div>
+    </div>
+
+    <div class="section-label">Linux Commands You Must Know</div>
+    <div class="code-block">
+<span class="cm"># See all block devices (disks)</span>
+lsblk
+
+<span class="cm"># Format new volume with ext4 filesystem (ONLY for NEW volumes)</span>
+sudo mkfs -t ext4 /dev/xvdf
+
+<span class="cm"># Create a mount point directory</span>
+sudo mkdir /mnt/my-data
+
+<span class="cm"># Mount the volume</span>
+sudo mount /dev/xvdf /mnt/my-data
+
+<span class="cm"># Write test data</span>
+echo <span class="str">"This is my backup test"</span> | sudo tee /mnt/my-data/testfile.txt
+
+<span class="cm"># Mount RESTORED volume (NO mkfs needed — data already exists!)</span>
+sudo mkdir /mnt/recovered-data
+sudo mount /dev/xvdg /mnt/recovered-data
+
+<span class="cm"># Verify recovery</span>
+cat /mnt/recovered-data/testfile.txt
+    </div>
+    <div class="tip-box danger"><span class="tip-icon">🚨</span><div class="tip-text"><strong>Critical:</strong> NEVER run <code>mkfs</code> on a restored volume. It will wipe your recovered data. Only run <code>mkfs</code> on brand-new blank volumes.</div></div>
+  </div>
+</div>
+
+<!-- ── Q3 S3 ── -->
+<div class="exp-card" id="q3">
+  <div class="exp-header">
+    <span class="exp-num">Q3</span>
+    <span class="exp-title">Amazon S3 — Store, Retrieve & Public Access</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-s3">S3</span>
+      <span class="svc-tag svc-iam">IAM</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">What is S3?</div>
+    <div class="concept-box">
+      <strong>Simple Storage Service (S3)</strong> is object storage — not a filesystem. You store objects (files) inside buckets. S3 is <strong>globally unique</strong> for bucket names. There's no folder hierarchy (it simulates folders with key prefixes). S3 is 99.999999999% (11 nines) durable.
+    </div>
+    <div class="concepts-grid">
+      <div class="concept-chip"><div class="chip-title">🪣 Bucket</div><div class="chip-desc">Top-level container. Name must be globally unique across ALL of AWS.</div></div>
+      <div class="concept-chip"><div class="chip-title">📄 Object</div><div class="chip-desc">A file + metadata. Max 5TB per object. Accessed via URL.</div></div>
+      <div class="concept-chip"><div class="chip-title">🔒 ACL</div><div class="chip-desc">Access Control Lists. Legacy method. Prefer bucket policies instead.</div></div>
+      <div class="concept-chip"><div class="chip-title">📜 Bucket Policy</div><div class="chip-desc">JSON policy applied to entire bucket. Controls public/private access.</div></div>
+    </div>
+
+    <div class="section-label">Public Access Policy (memorize this JSON)</div>
+    <div class="code-block">
+{
+  <span class="str">"Version"</span>: <span class="str">"2012-10-17"</span>,
+  <span class="str">"Statement"</span>: [{
+    <span class="str">"Sid"</span>: <span class="str">"PublicReadGetObject"</span>,
+    <span class="str">"Effect"</span>: <span class="str">"Allow"</span>,
+    <span class="str">"Principal"</span>: <span class="str">"*"</span>,         <span class="cm">// * means everyone (public)</span>
+    <span class="str">"Action"</span>: <span class="str">"s3:GetObject"</span>,  <span class="cm">// read-only</span>
+    <span class="str">"Resource"</span>: <span class="str">"arn:aws:s3:::YOUR-BUCKET-NAME/*"</span>
+  }]
+}
+    </div>
+    <div class="tip-box warn"><span class="tip-icon">⚠️</span><div class="tip-text"><strong>Two-step public access:</strong> (1) Uncheck "Block all public access" on bucket, AND (2) Add bucket policy. Both steps are required. Missing either step = files remain private.</div></div>
+  </div>
+</div>
+
+<!-- ── Q4 RDS ── -->
+<div class="exp-card" id="q4">
+  <div class="exp-header">
+    <span class="exp-num">Q4</span>
+    <span class="exp-title">Amazon RDS — Relational Database Setup & Connection</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-rds">RDS</span>
+      <span class="svc-tag svc-ec2">VPC/SG</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">What is RDS?</div>
+    <div class="concept-box">
+      <strong>Relational Database Service (RDS)</strong> is a managed database service. AWS handles patching, backups, hardware provisioning, and replication. You just manage your database and data. Supports MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, and Aurora.
+    </div>
+    <div class="section-label">Key Settings to Remember</div>
+    <table class="data-table">
+      <tr><th>Setting</th><th>Value for Exam</th><th>Why</th></tr>
+      <tr><td>Template</td><td>Free Tier</td><td>Disables costly Multi-AZ, larger instances</td></tr>
+      <tr><td>Engine</td><td>MySQL</td><td>Most common, easy to use with MySQL Workbench</td></tr>
+      <tr><td>Instance Type</td><td>db.t3.micro</td><td>Free Tier eligible</td></tr>
+      <tr><td>Storage</td><td>20 GiB</td><td>Free Tier limit</td></tr>
+      <tr><td>Public Access</td><td>Yes</td><td>Required to connect from your laptop</td></tr>
+      <tr><td>Port</td><td>3306</td><td>MySQL default</td></tr>
+      <tr><td>Auto Backup</td><td>1 day retention</td><td>Minimum for the lab requirement</td></tr>
+    </table>
+    <div class="section-label">SQL Commands to Verify</div>
+    <div class="code-block">
+<span class="cm">-- Create database and table</span>
+<span class="kw">CREATE DATABASE</span> ccl_test;
+<span class="kw">USE</span> ccl_test;
+<span class="kw">CREATE TABLE</span> Students (
+  id   <span class="kw">INT PRIMARY KEY AUTO_INCREMENT</span>,
+  name <span class="kw">VARCHAR</span>(<span class="num">50</span>),
+  roll_no <span class="kw">INT</span>
+);
+<span class="cm">-- Insert and verify</span>
+<span class="kw">INSERT INTO</span> Students (name, roll_no) <span class="kw">VALUES</span> (<span class="str">'YourName'</span>, <span class="num">64</span>);
+<span class="kw">SELECT * FROM</span> Students;
+    </div>
+    <div class="tip-box danger"><span class="tip-icon">🚨</span><div class="tip-text"><strong>Common failure point:</strong> If MySQL Workbench can't connect, go to your RDS Security Group → Inbound Rules → Add MySQL/Aurora, Port 3306, Source: My IP. Without this, the firewall blocks you.</div></div>
+  </div>
+</div>
+
+<!-- ── Q5 Static Site ── -->
+<div class="exp-card" id="q5">
+  <div class="exp-header">
+    <span class="exp-num">Q5</span>
+    <span class="exp-title">S3 Static Website Hosting</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-s3">S3</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">Concept</div>
+    <div class="concept-box">
+      S3 can serve static HTML/CSS/JS files directly as a website. No server needed. The website gets a public URL like: <code>http://bucket-name.s3-website-us-east-1.amazonaws.com</code>. This is a common way to host frontend applications cheaply.
+    </div>
+    <div class="section-label">Difference from regular S3 object URL</div>
+    <table class="data-table">
+      <tr><th>Type</th><th>URL Format</th><th>Use Case</th></tr>
+      <tr><td>Object URL (HTTPS)</td><td><code>https://bucket.s3.amazonaws.com/file.html</code></td><td>Direct file access</td></tr>
+      <tr><td>Website Endpoint (HTTP)</td><td><code>http://bucket.s3-website-region.amazonaws.com</code></td><td>Full website with routing, index doc, error doc</td></tr>
+    </table>
+    <div class="section-label">index.html Template</div>
+    <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;My AWS Website&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome to my S3 Static Website&lt;/h1&gt;
+  &lt;p&gt;This site is hosted on Amazon S3!&lt;/p&gt;
+  &lt;img src=<span class="str">"my-image.jpg"</span> alt=<span class="str">"Lab Image"</span> width=<span class="str">"300"</span>&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+    </div>
+    <div class="tip-box tip"><span class="tip-icon">✅</span><div class="tip-text"><strong>Image name must match exactly:</strong> If your HTML says <code>src="my-image.jpg"</code>, the uploaded file must also be named <code>my-image.jpg</code> (case-sensitive!).</div></div>
+  </div>
+</div>
+
+<!-- ── Q6 CloudWatch ── -->
+<div class="exp-card" id="q6">
+  <div class="exp-header">
+    <span class="exp-num">Q6</span>
+    <span class="exp-title">CloudWatch — Monitoring, Metrics & Alarms</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-cw">CloudWatch</span>
+      <span class="svc-tag svc-ec2">EC2</span>
+      <span class="svc-tag svc-s3">SNS</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">What is CloudWatch?</div>
+    <div class="concept-box">
+      <strong>CloudWatch</strong> is AWS's monitoring and observability service. It collects metrics, logs, and events from AWS services. Think of it as a dashboard + alerting system. Default metrics are collected every 5 minutes. Detailed monitoring (every 1 minute) costs extra.
+    </div>
+    <div class="section-label">Key Metrics for EC2</div>
+    <table class="data-table">
+      <tr><th>Metric</th><th>What it measures</th><th>Normal range</th></tr>
+      <tr><td>CPUUtilization</td><td>% of CPU being used</td><td>0–100%</td></tr>
+      <tr><td>DiskReadOps</td><td>Number of read ops from EBS</td><td>Depends on workload</td></tr>
+      <tr><td>NetworkIn</td><td>Bytes received by instance</td><td>Depends on traffic</td></tr>
+      <tr><td>NetworkOut</td><td>Bytes sent by instance</td><td>Depends on traffic</td></tr>
+    </table>
+    <div class="section-label">Alarm → SNS Flow</div>
+    <div class="concept-box">
+      CloudWatch Alarm → State changes to <strong>ALARM</strong> → triggers <strong>SNS Topic</strong> → SNS sends email to subscribed address. You must <strong>confirm subscription</strong> by clicking the link AWS emails you, otherwise no alerts are delivered.
+    </div>
+    <div class="section-label">CPU Stress Command</div>
+    <div class="code-block">
+<span class="cm"># Run this to spike CPU to ~100% (tests the alarm)</span>
+sha1sum /dev/zero &
+
+<span class="cm"># Check it's working</span>
+top  <span class="cm"># Press q to exit</span>
+
+<span class="cm"># Stop the load after alarm triggers</span>
+killall sha1sum
+    </div>
+    <div class="tip-box info"><span class="tip-icon">ℹ️</span><div class="tip-text">CloudWatch checks every 5 minutes by default. After running the stress command, wait 5–10 minutes to see the alarm go red and receive the email.</div></div>
+  </div>
+</div>
+
+<!-- ── Q7 Web Server ── -->
+<div class="exp-card" id="q7">
+  <div class="exp-header">
+    <span class="exp-num">Q7</span>
+    <span class="exp-title">EC2 Web Server — Apache + Instance Resize</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-ec2">EC2</span>
+      <span class="svc-tag svc-ebs">EBS</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">Apache on Amazon Linux</div>
+    <div class="code-block">
+<span class="cm"># Update and install Apache</span>
+sudo yum update -y
+sudo yum install -y httpd
+
+<span class="cm"># Start and enable on reboot</span>
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+<span class="cm"># Create homepage</span>
+echo <span class="str">"&lt;h1&gt;Welcome to My EC2 Web Server&lt;/h1&gt;"</span> | sudo tee /var/www/html/index.html
+    </div>
+    <div class="section-label">Resize Concepts</div>
+    <div class="concepts-grid">
+      <div class="concept-chip"><div class="chip-title">🖥️ Instance Type Change</div><div class="chip-desc">Requires STOP → Change type → START. Changes CPU/RAM. Example: t2.micro → t3.micro.</div></div>
+      <div class="concept-chip"><div class="chip-title">💾 EBS Volume Resize</div><div class="chip-desc">Can be done while running (no stop needed). Change size in Modify Volume. Example: 8 GiB → 10 GiB.</div></div>
+    </div>
+    <div class="tip-box warn"><span class="tip-icon">⚠️</span><div class="tip-text"><strong>Security Group required:</strong> For the web server to be reachable, the Security Group must allow <strong>HTTP (port 80)</strong> from <code>0.0.0.0/0</code>. Without this, the browser will timeout.</div></div>
+  </div>
+</div>
+
+<!-- ── Q8 VPC ── -->
+<div class="exp-card" id="q8">
+  <div class="exp-header">
+    <span class="exp-num">Q8</span>
+    <span class="exp-title">VPC — Custom Network with Public & Private Subnets</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-vpc">VPC</span>
+      <span class="svc-tag svc-ec2">EC2</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">VPC Architecture</div>
+    <div class="concept-box">
+      A <strong>Virtual Private Cloud (VPC)</strong> is your own isolated network within AWS. Every VPC has a CIDR block (e.g., <code>10.0.0.0/16</code>). You carve subnets out of it. Public subnets have an Internet Gateway route. Private subnets use a NAT Gateway for outbound internet (updates) but are not reachable from outside.
+    </div>
+    <div class="concepts-grid">
+      <div class="concept-chip"><div class="chip-title">🌐 Internet Gateway</div><div class="chip-desc">Allows traffic in from the internet. Attached to VPC. Route table must point 0.0.0.0/0 → IGW.</div></div>
+      <div class="concept-chip"><div class="chip-title">🔀 NAT Gateway</div><div class="chip-desc">Lets private subnet instances reach internet (for updates). Blocks inbound connections.</div></div>
+      <div class="concept-chip"><div class="chip-title">📡 Route Table</div><div class="chip-desc">Rules that define where network traffic goes. Each subnet is associated with one route table.</div></div>
+      <div class="concept-chip"><div class="chip-title">🔒 Security Group</div><div class="chip-desc">Virtual firewall at instance level. Stateful — return traffic is automatically allowed.</div></div>
+      <div class="concept-chip"><div class="chip-title">🚧 NACL</div><div class="chip-desc">Network ACL — stateless firewall at subnet level. Both inbound AND outbound rules needed.</div></div>
+    </div>
+    <div class="section-label">VPC Wizard Settings for Lab</div>
+    <table class="data-table">
+      <tr><th>Setting</th><th>Value</th></tr>
+      <tr><td>Name</td><td><code>CCL-Custom-VPC</code></td></tr>
+      <tr><td>Availability Zones</td><td>2</td></tr>
+      <tr><td>Public Subnets</td><td>2</td></tr>
+      <tr><td>Private Subnets</td><td>2</td></tr>
+      <tr><td>NAT Gateway</td><td>In 1 AZ</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ── Q9a CloudTrail ── -->
+<div class="exp-card" id="q9a">
+  <div class="exp-header">
+    <span class="exp-num">Q9</span>
+    <span class="exp-title">CloudTrail — Activity Logging & Audit</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-ct">CloudTrail</span>
+      <span class="svc-tag svc-s3">S3</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">What is CloudTrail?</div>
+    <div class="concept-box">
+      <strong>CloudTrail</strong> records every API call made in your AWS account — via Console, CLI, or SDK. It answers: <em>Who did what, when, and from where?</em> It's your security audit log. Logs are stored in an S3 bucket as compressed JSON (.gz files).
+    </div>
+    <div class="concepts-grid">
+      <div class="concept-chip"><div class="chip-title">📋 Trail</div><div class="chip-desc">Configuration that defines what to log and where to store it.</div></div>
+      <div class="concept-chip"><div class="chip-title">📅 Event History</div><div class="chip-desc">Last 90 days of management events. Searchable instantly in console.</div></div>
+      <div class="concept-chip"><div class="chip-title">🪣 S3 Storage</div><div class="chip-desc">Permanent log storage. JSON.gz files. Path: AWSLogs/AccountID/CloudTrail/Region/Year/Month/Day/</div></div>
+      <div class="concept-chip"><div class="chip-title">🌍 Multi-Region</div><div class="chip-desc">"Apply to all regions: Yes" ensures logs from every region are captured.</div></div>
+    </div>
+    <div class="tip-box tip"><span class="tip-icon">✅</span><div class="tip-text">To quickly verify CloudTrail is working: stop an EC2 instance, then check Event History for <code>StopInstances</code> event. You'll see exactly who stopped it and when.</div></div>
+  </div>
+</div>
+
+<!-- ── Q9b Terraform ── -->
+<div class="exp-card" id="q9b">
+  <div class="exp-header">
+    <span class="exp-num">Q9b</span>
+    <span class="exp-title">Terraform — Infrastructure as Code (IaC)</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-tf">Terraform</span>
+      <span class="svc-tag svc-ec2">EC2</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">What is IaC / Terraform?</div>
+    <div class="concept-box">
+      <strong>Infrastructure as Code</strong> means defining your cloud infrastructure in configuration files instead of clicking the console. <strong>Terraform</strong> by HashiCorp is the most popular IaC tool. It is <em>declarative</em> — you describe the end state, Terraform figures out how to get there.
+    </div>
+    <div class="section-label">Terraform Workflow</div>
+    <table class="data-table">
+      <tr><th>Command</th><th>What it does</th></tr>
+      <tr><td><code>terraform init</code></td><td>Downloads provider plugins (AWS plugin). Run once per project.</td></tr>
+      <tr><td><code>terraform plan</code></td><td>Preview what will be created/changed/destroyed. No changes made.</td></tr>
+      <tr><td><code>terraform apply</code></td><td>Actually creates the infrastructure. Type <code>yes</code> to confirm.</td></tr>
+      <tr><td><code>terraform destroy</code></td><td>Deletes all resources defined in your config. Type <code>yes</code> to confirm.</td></tr>
+    </table>
+    <div class="tip-box danger"><span class="tip-icon">🚨</span><div class="tip-text"><strong>Always run <code>terraform destroy</code> after the exam</strong> to avoid unexpected AWS charges from resources left running.</div></div>
+  </div>
+</div>
+
+<!-- ── Q10 Beanstalk ── -->
+<div class="exp-card" id="q10">
+  <div class="exp-header">
+    <span class="exp-num">Q10</span>
+    <span class="exp-title">Elastic Beanstalk — PaaS Application Deployment</span>
+    <div class="exp-services">
+      <span class="svc-tag svc-eb">Beanstalk</span>
+      <span class="svc-tag svc-ec2">EC2</span>
+      <span class="svc-tag svc-iam">IAM</span>
+    </div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">What is Elastic Beanstalk?</div>
+    <div class="concept-box">
+      <strong>Elastic Beanstalk</strong> is AWS's Platform as a Service (PaaS). You upload your application code and AWS automatically handles: EC2 provisioning, load balancing, auto scaling, monitoring, and deployment. You retain full control over the underlying resources. It supports Python, Node.js, Java, PHP, Ruby, Go, .NET.
+    </div>
+    <div class="concepts-grid">
+      <div class="concept-chip"><div class="chip-title">📦 Application</div><div class="chip-desc">Top-level container. Holds all versions and environments.</div></div>
+      <div class="concept-chip"><div class="chip-title">🌿 Environment</div><div class="chip-desc">Running version of your app. Can be Web Server or Worker.</div></div>
+      <div class="concept-chip"><div class="chip-title">🎭 IAM Roles</div><div class="chip-desc">Needs service role + EC2 instance profile. Must be created before launching.</div></div>
+    </div>
+    <div class="section-label">IaaS vs PaaS Comparison</div>
+    <table class="data-table">
+      <tr><th>Aspect</th><th>IaaS (EC2)</th><th>PaaS (Beanstalk)</th></tr>
+      <tr><td>You manage</td><td>OS, runtime, app, data</td><td>Only app code and data</td></tr>
+      <tr><td>AWS manages</td><td>Hardware only</td><td>Hardware + OS + runtime + platform</td></tr>
+      <tr><td>Control</td><td>Full control</td><td>Less control, more convenience</td></tr>
+      <tr><td>Exam signal</td><td>"Launch EC2 instance"</td><td>"Deploy application without managing servers"</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PHASE 2 — STEP-BY-STEP EXECUTION
+════════════════════════════════════════════ -->
+<div class="phase-divider"></div>
+<div class="phase-header">
+  <div class="phase-num" style="background:rgba(249,115,22,0.15);border-color:rgba(249,115,22,0.3);color:var(--accent)">Phase 2</div>
+  <div class="phase-title">Hands-on Execution — All 11 Experiments</div>
+</div>
+
+<!-- ── P2 Q1 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q1</span>
+    <span class="exp-title">IAM: Users, Groups, Policies, MFA — Full Walkthrough</span>
+    <div class="exp-services"><span class="svc-tag svc-iam">IAM</span></div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">Step 1: Create Groups & Attach Policies</div>
+    <ol class="step-list">
+      <li>Go to <strong>AWS Console → IAM → User groups → Create group</strong></li>
+      <li>Name it <code>S3-Support</code>, scroll down, search for and attach <code>AmazonS3ReadOnlyAccess</code>. Create.</li>
+      <li>Repeat: Create <code>EC2-Support</code> → attach <code>AmazonEC2ReadOnlyAccess</code></li>
+      <li>Repeat: Create <code>EC2-Admin</code> → attach <code>AmazonEC2FullAccess</code></li>
+    </ol>
+
+    <div class="section-label">Step 2: Create IAM Users</div>
+    <ol class="step-list">
+      <li>Go to <strong>IAM → Users → Create user</strong></li>
+      <li>Name: <code>user-1</code>. Check <strong>"Provide user access to AWS Management Console"</strong>. Set custom password. Uncheck "must reset password". Click Next.</li>
+      <li>On "Set permissions" page — click <strong>Next without adding to group</strong> (we do it in step 4)</li>
+      <li>Repeat for <code>user-2</code> and <code>user-3</code></li>
+    </ol>
+
+    <div class="section-label">Step 3: Create MFA Enforcement Policy</div>
+    <ol class="step-list">
+      <li>Go to <strong>IAM → Policies → Create policy</strong></li>
+      <li>Click <strong>JSON</strong> tab, paste the MFA enforcement JSON (AllowUserToManageTheirOwnMFA + DenyEverythingIfNoMFA statements)</li>
+      <li>Name it <code>MFA-Enforcement-Policy</code>. Click Create policy.</li>
+    </ol>
+
+    <div class="section-label">Step 4: Assign Users to Groups</div>
+    <ol class="step-list">
+      <li>Go to <strong>IAM → User groups → S3-Support</strong> → Users tab → Add users → select <code>user-1</code></li>
+      <li>Go to <strong>EC2-Support</strong> → Add <code>user-2</code></li>
+      <li>Go to <strong>EC2-Admin</strong> → Add <code>user-3</code></li>
+      <li>Attach <code>MFA-Enforcement-Policy</code> to ALL three groups (Permissions tab → Add permissions → Attach policies)</li>
+    </ol>
+
+    <div class="section-label">Step 5: Verify</div>
+    <ul class="checklist">
+      <li>Log in as user-1 → should see S3 buckets but get "access denied" on EC2</li>
+      <li>Log in as user-3 → should be able to start/stop EC2 instances</li>
+      <li>Log in as any user WITHOUT MFA → all actions denied except MFA setup</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── P2 Q2 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q2</span>
+    <span class="exp-title">EBS: Full Storage + Backup + Recovery Cycle</span>
+    <div class="exp-services"><span class="svc-tag svc-ebs">EBS</span><span class="svc-tag svc-ec2">EC2</span></div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">Steps 1–3: Create, Attach & Mount</div>
+    <ol class="step-list">
+      <li><strong>EC2 → Elastic Block Store → Volumes → Create volume.</strong> Size: 1 GiB, AZ: must match your EC2 instance (e.g., us-east-1a). Click Create.</li>
+      <li>Select new volume → <strong>Actions → Attach volume</strong>. Choose your EC2 instance. Note device name (<code>/dev/sdf</code>). Click Attach.</li>
+      <li>Connect to instance via <strong>EC2 Instance Connect</strong>. Run: <code>lsblk</code> to confirm disk appears (shows as <code>xvdf</code>)</li>
+      <li>Format it: <code>sudo mkfs -t ext4 /dev/xvdf</code></li>
+      <li>Create mount point: <code>sudo mkdir /mnt/my-data</code></li>
+      <li>Mount: <code>sudo mount /dev/xvdf /mnt/my-data</code></li>
+    </ol>
+
+    <div class="section-label">Step 4: Write Data</div>
+    <ol class="step-list">
+      <li>Write file: <code>echo "This is my backup test" | sudo tee /mnt/my-data/testfile.txt</code></li>
+      <li>Verify: <code>ls /mnt/my-data</code> → should show <code>testfile.txt</code></li>
+    </ol>
+
+    <div class="section-label">Steps 5–8: Snapshot, Restore & Verify</div>
+    <ol class="step-list">
+      <li><strong>EC2 → Volumes → Select your 1GiB volume → Actions → Create snapshot.</strong> Description: "Lab Backup". Wait for status: Completed.</li>
+      <li><strong>EC2 → Snapshots → Select snapshot → Actions → Create volume from snapshot.</strong> Same AZ. Click Create.</li>
+      <li>Go back to Volumes → select the NEW restored volume → <strong>Actions → Attach volume</strong> → same EC2 instance. New device name will be <code>/dev/sdg</code> → appears as <code>xvdg</code>.</li>
+      <li>In terminal: <code>sudo mkdir /mnt/recovered-data</code></li>
+      <li>Mount: <code>sudo mount /dev/xvdg /mnt/recovered-data</code> (NO mkfs!)</li>
+      <li>Verify: <code>cat /mnt/recovered-data/testfile.txt</code> → should show "This is my backup test" ✅</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── P2 Q3 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q3</span>
+    <span class="exp-title">S3: Create Bucket, Upload Files & Configure Public Access</span>
+    <div class="exp-services"><span class="svc-tag svc-s3">S3</span></div>
+  </div>
+  <div class="exp-body">
+    <ol class="step-list">
+      <li>Go to <strong>S3 → Create bucket.</strong> Name: <code>ccl-practical-yourname-2026</code> (must be globally unique). Region: us-east-1.</li>
+      <li><strong>Block Public Access:</strong> Uncheck "Block all public access". Check the acknowledgement box. Create bucket.</li>
+      <li>Click on your bucket → <strong>Upload → Add files.</strong> Upload a text file and an image. Click Upload.</li>
+      <li>Go to <strong>Permissions tab → Bucket policy → Edit.</strong> Paste the public read policy JSON with your bucket name in the Resource ARN. Save changes.</li>
+      <li>Go to <strong>Objects tab → click on your image → copy Object URL.</strong> Paste in Incognito browser tab. Image should load. ✅</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── P2 Q4 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q4</span>
+    <span class="exp-title">RDS: Create MySQL Database & Connect via Workbench</span>
+    <div class="exp-services"><span class="svc-tag svc-rds">RDS</span></div>
+  </div>
+  <div class="exp-body">
+    <ol class="step-list">
+      <li>Go to <strong>RDS → Create database.</strong> Choose <strong>Standard create</strong>. Engine: MySQL. Template: <strong>Free tier</strong>.</li>
+      <li>Settings: DB instance identifier: <code>ccl-mysql-db</code>. Master username: <code>admin</code>. Master password: <code>CclLab123</code> (or your choice).</li>
+      <li>Instance type: <code>db.t3.micro</code>. Storage: 20 GiB. Disable storage autoscaling.</li>
+      <li>Connectivity: Public access = <strong>Yes</strong>. VPC security group: Create new → name: <code>ccl-rds-sg</code>. Port: 3306.</li>
+      <li>Additional configuration: Enable automatic backups. Retention: 1 day. Click <strong>Create database.</strong> Wait 5–10 min.</li>
+      <li>Once Available: Click on DB → copy <strong>Endpoint</strong> (looks like <code>ccl-mysql-db.xxxx.us-east-1.rds.amazonaws.com</code>)</li>
+      <li><strong>Fix Security Group:</strong> Go to the Security Group → Inbound Rules → Edit → Add: Type MySQL/Aurora, Port 3306, Source: My IP. Save.</li>
+      <li>Open <strong>MySQL Workbench.</strong> New connection: Hostname = RDS endpoint, Port = 3306, Username = admin, Password = your password. Test Connection → OK.</li>
+      <li>Run the SQL commands to create database, table, insert a record, and SELECT to verify.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── P2 Q5 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q5</span>
+    <span class="exp-title">S3 Static Website: Full Deployment</span>
+    <div class="exp-services"><span class="svc-tag svc-s3">S3</span></div>
+  </div>
+  <div class="exp-body">
+    <ol class="step-list">
+      <li>Create S3 bucket (<code>my-static-site-yourname-64</code>). Uncheck block public access. Create.</li>
+      <li>Go to bucket → <strong>Properties tab → scroll to Static website hosting → Edit → Enable.</strong> Index document: <code>index.html</code>. Save.</li>
+      <li>Create <code>index.html</code> on your computer (use the template HTML). Also have an image ready as <code>my-image.jpg</code>.</li>
+      <li>Upload BOTH files to the bucket via Upload.</li>
+      <li><strong>Permissions tab → Bucket policy → Edit.</strong> Paste public read JSON with your bucket name. Save.</li>
+      <li>Go back to <strong>Properties → Static website hosting → copy the Bucket website endpoint URL.</strong></li>
+      <li>Paste URL in browser → your page should load with heading, text, and image. ✅</li>
+    </ol>
+    <div class="tip-box info"><span class="tip-icon">ℹ️</span><div class="tip-text">Use the <strong>website endpoint</strong> URL (http://), not the object URL (https://). The website endpoint supports <code>index.html</code> as the default page.</div></div>
+  </div>
+</div>
+
+<!-- ── P2 Q6 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q6</span>
+    <span class="exp-title">CloudWatch: Monitor EC2 + Create CPU Alarm + Trigger It</span>
+    <div class="exp-services"><span class="svc-tag svc-cw">CloudWatch</span></div>
+  </div>
+  <div class="exp-body">
+    <ol class="step-list">
+      <li>Go to <strong>CloudWatch → Metrics → All metrics → EC2 → Per-Instance Metrics.</strong> Search for your instance ID. Check CPUUtilization, DiskReadOps, NetworkIn, NetworkOut.</li>
+      <li>Go to <strong>Alarms → All alarms → Create alarm → Select metric → EC2 → Per-Instance Metrics.</strong> Check CPUUtilization for your instance. Click Select metric.</li>
+      <li>Conditions: Threshold type = Static. Whenever > 70. Click Next.</li>
+      <li>Notifications: In alarm → Create new SNS topic → name: <code>CPU_Alert_Topic</code> → enter your email. Click Create topic.</li>
+      <li><strong>Check email inbox — click "Confirm Subscription"</strong> in the AWS email. (This is mandatory!)</li>
+      <li>Name alarm: <code>High-CPU-Alarm</code>. Create alarm.</li>
+      <li>Connect to EC2 via EC2 Instance Connect. Run: <code>sha1sum /dev/zero &</code></li>
+      <li>Wait 5–10 minutes. Watch alarm turn red in CloudWatch. Check email for alert. ✅</li>
+      <li>Stop load: <code>killall sha1sum</code></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── P2 Q7 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q7</span>
+    <span class="exp-title">EC2 Web Server: Install Apache + Resize Instance & Storage</span>
+    <div class="exp-services"><span class="svc-tag svc-ec2">EC2</span></div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">Part A: Install Web Server</div>
+    <ol class="step-list">
+      <li>Connect to your Amazon Linux EC2 via <strong>EC2 Instance Connect.</strong></li>
+      <li>Run: <code>sudo yum update -y</code> then <code>sudo yum install -y httpd</code></li>
+      <li>Run: <code>sudo systemctl start httpd</code> and <code>sudo systemctl enable httpd</code></li>
+      <li>Create page: <code>echo "&lt;h1&gt;Welcome to My EC2 Web Server&lt;/h1&gt;" | sudo tee /var/www/html/index.html</code></li>
+      <li><strong>Security Group → Inbound Rules → Add HTTP (port 80), Anywhere (0.0.0.0/0).</strong></li>
+      <li>Copy instance Public IPv4 → paste in browser → see your page. ✅</li>
+    </ol>
+
+    <div class="section-label">Part B: Change Instance Type</div>
+    <ol class="step-list">
+      <li>EC2 → select instance → <strong>Instance state → Stop.</strong> Wait until Stopped.</li>
+      <li><strong>Actions → Instance Settings → Change instance type.</strong> Select <code>t3.micro</code>. Apply.</li>
+      <li>Start the instance again.</li>
+    </ol>
+
+    <div class="section-label">Part C: Modify EBS Volume</div>
+    <ol class="step-list">
+      <li>EC2 → Volumes → select root volume (attached to your instance).</li>
+      <li><strong>Actions → Modify volume.</strong> Change size from 8 GiB to 10 GiB. Modify → Confirm.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── P2 Q8 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q8</span>
+    <span class="exp-title">VPC: Custom Network + Web Server Deployment</span>
+    <div class="exp-services"><span class="svc-tag svc-vpc">VPC</span><span class="svc-tag svc-ec2">EC2</span></div>
+  </div>
+  <div class="exp-body">
+    <ol class="step-list">
+      <li>Go to <strong>VPC → Create VPC → Select "VPC and more".</strong></li>
+      <li>Name: <code>CCL-Custom-VPC</code>. AZs: 2. Public subnets: 2. Private subnets: 2. NAT Gateway: In 1 AZ. Click Create VPC. Wait ~2 min.</li>
+      <li>Go to <strong>Security Groups → Create security group.</strong> Name: <code>Web-Server-SG</code>. VPC: <code>CCL-Custom-VPC</code>. Inbound: HTTP port 80 from 0.0.0.0/0 AND SSH port 22 from My IP. Create.</li>
+      <li>Go to <strong>EC2 → Launch instances.</strong> Name: <code>VPC-Web-Server</code>. AMI: Amazon Linux 2023. Instance type: t3.micro.</li>
+      <li>Network settings → Edit: VPC = CCL-Custom-VPC. Subnet = a <strong>public</strong> subnet. Auto-assign public IP = Enable. Security group = Web-Server-SG.</li>
+      <li>Advanced Details → scroll to <strong>User data box</strong> → paste the bash script (installs httpd automatically on launch).</li>
+      <li>Click Launch. Wait for Status Check to pass (2/2 checks).</li>
+      <li>Copy Public IPv4 DNS → paste in browser → see "Success! Web Server launched in a Custom VPC". ✅</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── P2 Q9a ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q9</span>
+    <span class="exp-title">CloudTrail: Create Trail, Log Activity & Verify</span>
+    <div class="exp-services"><span class="svc-tag svc-ct">CloudTrail</span><span class="svc-tag svc-s3">S3</span></div>
+  </div>
+  <div class="exp-body">
+    <ol class="step-list">
+      <li>Go to <strong>CloudTrail → Trails → Create trail.</strong></li>
+      <li>Name: <code>Pratham-Activity-Log</code>. Storage: Create new S3 bucket (accept default name). Apply to all regions: Yes. Keep Management events checked. Click Create trail.</li>
+      <li>Verify S3 bucket was created: go to <strong>S3 → search for <code>aws-cloudtrail-logs-...</code></strong>. Open it — see AWSLogs/ folder.</li>
+      <li>Generate a log entry: go to <strong>EC2 → any instance → Stop → then Start.</strong></li>
+      <li>Verify in <strong>CloudTrail → Event history →</strong> look for <code>StopInstances</code> and <code>StartInstances</code> events. Click to see user, time, IP address. ✅</li>
+      <li>Optional: In S3 bucket navigate to <code>AWSLogs/AccountID/CloudTrail/region/year/month/day/</code> to see the <code>.json.gz</code> log files.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── P2 Q9b ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q9b</span>
+    <span class="exp-title">Terraform: IaC — Provision EC2 Instance</span>
+    <div class="exp-services"><span class="svc-tag svc-tf">Terraform</span><span class="svc-tag svc-ec2">EC2</span></div>
+  </div>
+  <div class="exp-body">
+    <ol class="step-list">
+      <li>Install Terraform from <code>terraform.io/downloads</code>. Add to PATH. Verify: <code>terraform -v</code></li>
+      <li>Install AWS CLI. Run <code>aws configure</code> → enter Access Key ID, Secret Access Key, region (<code>us-east-1</code>), output format (<code>json</code>).</li>
+      <li>Create a folder: <code>mkdir ccl-terraform-lab && cd ccl-terraform-lab</code></li>
+      <li>Create <code>main.tf</code> with the provider block, security group resource (ports 22 + 80), and EC2 instance resource (ami, t2.micro, security group reference).</li>
+      <li>Run <code>terraform init</code> → downloads AWS provider plugin.</li>
+      <li>Run <code>terraform plan</code> → preview resources to be created (should show security group + 1 EC2 instance).</li>
+      <li>Run <code>terraform apply</code> → type <code>yes</code> → watch resources get created.</li>
+      <li>Verify in AWS Console: EC2 → Instances → see <code>Terraform-Lab-Instance</code> running. ✅</li>
+      <li>Cleanup: <code>terraform destroy</code> → type <code>yes</code>.</li>
+    </ol>
+    <div class="tip-box warn"><span class="tip-icon">⚠️</span><div class="tip-text">The AMI ID <code>ami-0c55b159cbfafe1f0</code> is region-specific. If you're in a different region, look up the correct Amazon Linux 2 AMI ID for that region in the EC2 Launch wizard.</div></div>
+  </div>
+</div>
+
+<!-- ── P2 Q10 ── -->
+<div class="exp-card">
+  <div class="exp-header">
+    <span class="exp-num">Q10</span>
+    <span class="exp-title">Elastic Beanstalk: Deploy a PaaS Application</span>
+    <div class="exp-services"><span class="svc-tag svc-eb">Beanstalk</span><span class="svc-tag svc-iam">IAM</span></div>
+  </div>
+  <div class="exp-body">
+    <div class="section-label">Pre-step: Create IAM Roles (if not already present)</div>
+    <ol class="step-list">
+      <li>Go to <strong>IAM → Roles → Create role.</strong> Trust: AWS Service → Elastic Beanstalk. Attach: <code>AWSElasticBeanstalkWebTier</code> + <code>AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy</code>. Name: <code>aws-elasticbeanstalk-service-role</code>.</li>
+      <li>Create another role. Trust: EC2. Attach: <code>AWSElasticBeanstalkWebTier</code> + <code>AWSElasticBeanstalkMulticontainerDocker</code> + <code>AWSElasticBeanstalkWorkerTier</code>. Name: <code>aws-elasticbeanstalk-ec2-role</code>.</li>
+    </ol>
+
+    <div class="section-label">Deploy the Application</div>
+    <ol class="step-list">
+      <li>Go to <strong>Elastic Beanstalk → Create application.</strong></li>
+      <li>Name: <code>CCL-PaaS-App</code>. Environment tier: Web server. Platform: Python. Application code: Sample application. Configuration: Single instance (free tier eligible). Click Next.</li>
+      <li>Service role: <code>aws-elasticbeanstalk-service-role</code>. EC2 instance profile: <code>aws-elasticbeanstalk-ec2-role</code>. EC2 key pair: select your key. Click Next.</li>
+      <li>VPC: Default VPC. Instance subnets: check all AZs. Public IP: Activated. Click Next.</li>
+      <li>Instance type: t2.micro. Scaling: Single instance. Click Next → Next.</li>
+      <li>Review → <strong>Submit.</strong> Wait 3–5 minutes. Monitor events log.</li>
+      <li>When health turns <strong>Green</strong> → click the Domain URL at top of dashboard. Sample app should open. ✅</li>
+      <li>After exam: <strong>Actions → Terminate Environment</strong> to delete all resources.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- QUICK REFERENCE -->
+<div class="phase-divider"></div>
+<div class="phase-header">
+  <div class="phase-num" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.3);color:var(--accent3)">Quick Ref</div>
+  <div class="phase-title">Common Mistakes & Final Checklist</div>
+</div>
+
+<div class="exp-card">
+  <div class="exp-body">
+    <div class="section-label">Most Common Failure Points</div>
+    <table class="data-table">
+      <tr><th>Experiment</th><th>Most Common Mistake</th><th>Fix</th></tr>
+      <tr><td>Q1 IAM</td><td>MFA enforcement denying all access</td><td>Log in WITH MFA device configured first</td></tr>
+      <tr><td>Q2 EBS</td><td>Running mkfs on restored volume</td><td>Only mount — never format a restored volume</td></tr>
+      <tr><td>Q2 EBS</td><td>Volume won't attach</td><td>AZ mismatch — volume must be in SAME AZ as EC2</td></tr>
+      <tr><td>Q3 S3</td><td>File inaccessible via URL</td><td>Must BOTH uncheck block-public-access AND add bucket policy</td></tr>
+      <tr><td>Q4 RDS</td><td>Workbench can't connect</td><td>Add inbound rule: MySQL/Aurora port 3306, Source: My IP in RDS Security Group</td></tr>
+      <tr><td>Q5 Static Site</td><td>Image not loading</td><td>Image filename in HTML must match uploaded filename exactly (case-sensitive)</td></tr>
+      <tr><td>Q6 CloudWatch</td><td>Email alarm not received</td><td>Must click "Confirm Subscription" in AWS email</td></tr>
+      <tr><td>Q7 Web Server</td><td>Browser can't reach server</td><td>Add HTTP port 80 inbound rule in Security Group</td></tr>
+      <tr><td>Q8 VPC</td><td>Instance not reachable</td><td>Must use PUBLIC subnet + auto-assign public IP enabled</td></tr>
+      <tr><td>Q9 CloudTrail</td><td>No logs visible</td><td>Wait a few minutes; also check Event History (instant) vs S3 (delayed)</td></tr>
+      <tr><td>Q10 Beanstalk</td><td>Launch fails on Service Access step</td><td>Pre-create both IAM roles before starting the wizard</td></tr>
+    </table>
+
+    <div class="section-label">Pre-Exam Checklist</div>
+    <ul class="checklist">
+      <li>AWS account logged in and region set to us-east-1 (N. Virginia)</li>
+      <li>EC2 instance (Amazon Linux) already running (saves time for Q6, Q7, Q2)</li>
+      <li>index.html and my-image.jpg prepared on your computer for Q3/Q5</li>
+      <li>MySQL Workbench installed for Q4</li>
+      <li>Terraform + AWS CLI installed and configured for Q9b</li>
+      <li>Your email accessible to confirm SNS subscription for Q6</li>
+      <li>Know your EC2 instance's Availability Zone (for EBS in Q2)</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  AWS CCL Practical Exam Study Guide &nbsp;·&nbsp; 11 Experiments &nbsp;·&nbsp; Phase 1 + Phase 2 &nbsp;·&nbsp; Good luck! 🚀
+</footer>
+
+</body>
+</html>
